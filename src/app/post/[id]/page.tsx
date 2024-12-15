@@ -2,8 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { posts } from "@/data/posts";
 
-export default function PostPage({ params }: { params: { id: string } }) {
-  const post = posts.find((post) => post.id.toString() === params.id);
+export type PageProps = Promise<{ id: string }>;
+
+export default async function PostPage(props: { params: PageProps }) {
+  const { id } = await props.params;
+  const post = posts.find((post) => post.id.toString() ===id);
 
   if (!post) {
     return (
